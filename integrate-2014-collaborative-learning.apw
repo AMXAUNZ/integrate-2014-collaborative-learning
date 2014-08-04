@@ -196,6 +196,14 @@
 <FilePathName>src\system-variables.axi</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="TP4"><Identifier>integrate-2014-mxd-1000-p-student-table</Identifier>
+<FilePathName>ui\integrate-2014-mxd-1000-p-student-table.TP4</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="TP4"><Identifier>integrate-2014-mxd-2000xl-pan-p-lecturn</Identifier>
+<FilePathName>ui\integrate-2014-mxd-2000xl-pan-p-lecturn.TP4</FilePathName>
+<Comments></Comments>
+</File>
 </System>
 </Project>
 </Workspace>
