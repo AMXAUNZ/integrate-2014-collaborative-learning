@@ -7,6 +7,12 @@ program_name='system-variables'
 #include 'system-structures'
 #include 'system-constants'
 
+/*
+ * -------------------------------------------------------------------
+ * Global Variable Declarations
+ * -------------------------------------------------------------------
+ */
+
 define_variable
 
 

@@ -6,6 +6,12 @@ program_name='system-devices'
 #include 'system-library-api'
 #include 'system-constants'
 
+/*
+ * -------------------------------------------------------------------
+ * Declared Devices
+ * -------------------------------------------------------------------
+ */
+
 define_device
 
 

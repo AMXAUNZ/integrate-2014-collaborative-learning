@@ -6,6 +6,12 @@ program_name='system-mutual-exclusions'
 #include 'system-devices'
 #include 'system-constants'
 
+/*
+ * -------------------------------------------------------------------
+ * Mutually Exclusive Groups
+ * -------------------------------------------------------------------
+ */
+
 define_mutually_exclusive
 
 

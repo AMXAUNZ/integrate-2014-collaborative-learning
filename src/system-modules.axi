@@ -6,6 +6,12 @@ program_name='system-modules'
 #include 'system-devices'
 #include 'system-variables'
 
+/*
+ * -------------------------------------------------------------------
+ * Module Instantiations
+ * -------------------------------------------------------------------
+ */
+
 define_module
 
 

@@ -12,6 +12,12 @@ program_name='system-events'
 #include 'system-variables'
 #include 'system-functions'
 
+/*
+ * -------------------------------------------------------------------
+ * Events (Button, Channel, Custom, Data, Timeline)
+ * -------------------------------------------------------------------
+ */
+
 define_event
 
 

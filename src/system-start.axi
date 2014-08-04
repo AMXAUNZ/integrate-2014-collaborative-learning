@@ -12,6 +12,12 @@ program_name='system-start'
 #include 'system-variables'
 #include 'system-functions'
 
+/*
+ * -------------------------------------------------------------------
+ * System Initialisation
+ * -------------------------------------------------------------------
+ */
+
 define_start
 
 
