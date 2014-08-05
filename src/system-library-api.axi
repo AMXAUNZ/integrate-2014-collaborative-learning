@@ -9,4 +9,16 @@ program_name='system-library-api'
  * -------------------------------------------------------------------
  */
 
+#include 'common'
+
+#include 'amx-controlports-api'
+
+#include 'amx-dvx-api'
+
+#include 'amx-dxlink-api'
+
+#include 'amx-enzo-api'
+
+#include 'amx-modero-api'
+
 #end_if

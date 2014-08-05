@@ -9,4 +9,16 @@ program_name='system-library-control'
  * -------------------------------------------------------------------
  */
 
+#include 'amx-controlports-control'
+
+#include 'amx-device-control'
+
+#include 'amx-dvx-control'
+
+#include 'amx-dxlink-control'
+
+#include 'amx-enzo-control'
+
+#include 'amx-modero-control'
+
 #end_if
