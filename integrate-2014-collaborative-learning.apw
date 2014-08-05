@@ -204,6 +204,22 @@
 <FilePathName>lib\common-library\common.axi</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="Module"><Identifier>drag-and-drop</Identifier>
+<FilePathName>mods\drag-and-drop.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>multi-preview-dvx</Identifier>
+<FilePathName>mods\multi-preview-dvx.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>touch-tracker</Identifier>
+<FilePathName>mods\touch-tracker.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>debug</Identifier>
+<FilePathName>src\debug.axi</FilePathName>
+<Comments></Comments>
+</File>
 <File CompileType="Netlinx" Type="MasterSrc"><Identifier>integrate-2014-collaborative-learning</Identifier>
 <FilePathName>src\integrate-2014-collaborative-learning.axs</FilePathName>
 <Comments></Comments>
