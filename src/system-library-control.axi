@@ -21,4 +21,6 @@ program_name='system-library-control'
 
 #include 'amx-modero-control'
 
+#include 'snapi-display-control'
+
 #end_if
