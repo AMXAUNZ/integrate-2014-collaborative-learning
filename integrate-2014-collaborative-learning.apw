@@ -224,6 +224,10 @@
 <FilePathName>src\integrate-2014-collaborative-learning.axs</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="Include"><Identifier>snapi-display-control</Identifier>
+<FilePathName>src\snapi-display-control.axi</FilePathName>
+<Comments></Comments>
+</File>
 <File CompileType="Netlinx" Type="Include"><Identifier>system-constants</Identifier>
 <FilePathName>src\system-constants.axi</FilePathName>
 <Comments></Comments>
