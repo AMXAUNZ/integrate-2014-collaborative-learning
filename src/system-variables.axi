@@ -123,5 +123,38 @@ dev dvDxlinkRxAudOutPorts[] =
 	dvRxMonitorStudentTableAudOut
 }
 
+/*
+ * --------------------
+ * Variables to keep track of changes in the system
+ * --------------------
+ */
+
+_DvxSwitcher dvx
+
+persistent integer selectedAudioInput = DVX_PORT_AUD_IN_NONE
+
+persistent integer selectedVideoInputMonitorStudentTable  = DVX_PORT_VID_IN_NONE
+persistent integer selectedVideoInputProjector = DVX_PORT_VID_IN_NONE
+
+char imageFileNameNoVideo[] = 'icon-novideo.png'
+
+// Drag and drop areas for 10" panel
+// drop areas
+_area dropAreaLeftOrientationMonitorStudentTable
+_area dropAreaRightOrientationMonitorStudentTable
+// drag item areas
+_area dragAreas10[DVX_MAX_VIDEO_INPUTS]
+
+char draggablePopups10[DVX_MAX_VIDEO_INPUTS][40]
+char blockDraggablePopups10[DVX_MAX_VIDEO_INPUTS][40]
+
+/*
+ * --------------------
+ * Wait times
+ * - in tenths of seconds
+ * --------------------
+ */
+
+integer waitTimeValidSignal     = 600
 
 #end_if
