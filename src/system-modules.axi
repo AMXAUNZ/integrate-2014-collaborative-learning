@@ -14,6 +14,7 @@ program_name='system-modules'
 
 define_module
 
-
+// drag and drop module for the student table
+'drag-and-drop' dragAndDropMod (vdvDragAndDropStudentTable, dvTpStudentTableDragAndDrop)
 
 #end_if
