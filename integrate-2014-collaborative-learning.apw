@@ -121,11 +121,11 @@
 <SalesOrder></SalesOrder>
 <PurchaseOrder></PurchaseOrder>
 <Comments></Comments>
-<System IsActive="true" Platform="Netlinx" Transport="Serial" TransportEx="Serial"><Identifier>integrate-2014-collaborative-learning</Identifier>
+<System IsActive="true" Platform="Netlinx" Transport="Serial" TransportEx="TCPIP"><Identifier>integrate-2014-collaborative-learning</Identifier>
 <SysID>0</SysID>
 <TransTCPIP>0.0.0.0</TransTCPIP>
 <TransSerial>COM1,115200,8,None,1,None</TransSerial>
-<TransTCPIPEx>192.168.7.171|1319|1| ||</TransTCPIPEx>
+<TransTCPIPEx>192.168.251.61|1319|1| ||</TransTCPIPEx>
 <TransSerialEx>COM8|38400|8|None|1|None||</TransSerialEx>
 <TransUSBEx>|||||</TransUSBEx>
 <TransVNMEx>10.0.0.1|1</TransVNMEx>
