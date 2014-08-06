@@ -18,11 +18,13 @@ program_name='integrate-2014-collaborative-learning'
 
 #include 'system-functions'
 
+#include 'system-modules'
+
 #include 'system-start'
 
 #include 'system-events'
 
 #include 'system-mainline'
 
-// listener libraries always need to go last
+// listener libraries always need to go last due to the way #define statements work
 #include 'system-library-listener'
