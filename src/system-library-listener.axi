@@ -19,4 +19,6 @@ program_name='system-library-listener'
 
 #include 'amx-modero-listener'
 
+#include 'amx-encoder-listener'
+
 #end_if

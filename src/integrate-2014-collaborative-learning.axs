@@ -28,3 +28,11 @@ program_name='integrate-2014-collaborative-learning'
 
 // listener libraries always need to go last due to the way #define statements work
 #include 'system-library-listener'
+
+////// RMS Includes need to be declared after the define devices section (where vdvRms is declared)
+////// and after any references to any callback function use. Safest to put this last.
+
+#include 'system-rms-api'
+
+#include 'system-rms-listener'
+

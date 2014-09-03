@@ -7,6 +7,9 @@ program_name='system-functions'
 #include 'system-devices'
 #include 'system-structures'
 #include 'system-variables'
+#include 'system-rms-api'
+
+#include 'debug'
 
 #if_not_defined __SYSTEM_FUNCTIONS__
 #define __SYSTEM_FUNCTIONS__
@@ -140,6 +143,36 @@ define_function unblockDragItemsAll (dev dragAndDropVirtual)
 	}
 }
 
+
+define_function unblockDragItemsAllWithValidSignal (dev dragAndDropVirtual)
+{
+	select
+	{
+		active (dragAndDropVirtual == vdvDragAndDropStudentTable):
+		{
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop1.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop1.port)
+			else
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop1.port)
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop2.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop2.port)
+			else
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop2.port)
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop3.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop3.port)
+			else
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop3.port)
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop4.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop4.port)
+			else
+				unblockDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop4.port)
+		}
+	}
+}
+
 define_function addDragItem (dev dragAndDropVirtual, integer id)
 {
 	select
@@ -186,6 +219,38 @@ define_function enableDragItemsAll (dev dragAndDropVirtual)
 			enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop2.port)
 			enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop3.port)
 			enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop4.port)
+		}
+	}
+}
+
+
+
+define_function enableDragItemsAllWithValidSignal (dev dragAndDropVirtual)
+{
+	select
+	{
+		active (dragAndDropVirtual == vdvDragAndDropStudentTable):
+		{
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop1.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop1.port)
+			else
+				disableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop1.port)
+			
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop2.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop2.port)
+			else
+				disableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop2.port)
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop3.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop3.port)
+			else
+				disableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop3.port)
+			
+			if (dvx.videoInputs[dvDvxVidInStudentLaptop4.port].status == DVX_SIGNAL_STATUS_VALID_SIGNAL)
+				enableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop4.port)
+			else
+				disableDragItem (vdvDragAndDropStudentTable, dvDvxVidInStudentLaptop4.port)
 		}
 	}
 }
@@ -318,9 +383,9 @@ define_function showSourceOnDisplay (integer input, integer output)
 			turnOnDisplay (vdvMonitorStudentTable)
 		}
 		
-		active (output == dvDvxVidOutProjectorAndMultiPip.port):
+		active (output == dvDvxVidOutProjector.port):
 		{
-			dvxSetVideoOutputTestPattern (dvDvxVidOutProjectorAndMultiPip, DVX_TEST_PATTERN_OFF)
+			dvxSetVideoOutputTestPattern (dvDvxVidOutProjector, DVX_TEST_PATTERN_OFF)
 			turnOnDisplay (vdvProjector)
 		}
 	}
@@ -352,7 +417,7 @@ define_function turnOffDisplaysAll ()
 define_function LaptopInputDetectedStudentTable (dev dvTxVidIn)
 {
 	// turn on the monitor at the student table
-	turnOnDisplay (vdvProjector)
+	turnOnDisplay (vdvMonitorStudentTable)
 	
 	// if there is no video currently routed to the monitor at the student table, show this source
 	if (selectedVideoInputMonitorStudentTable == DVX_PORT_VID_IN_NONE)
@@ -379,6 +444,148 @@ define_function LaptopInputDetectedStudentTable (dev dvTxVidIn)
 	}
 }
 
+/*
+ * --------------------
+ * Override encoder-listener callback functions
+ * --------------------
+ */
+
+
+#define INCLUDE_ENCODER_NOTIFY_USB_STATUS_CALLBACK
+define_function encoderNotifyUsbStatus (dev encoderUsb, char status[])
+{
+	// encoderUsb is the D:P:S of the USB port on the Encoder.
+	// status is the status of the USB storage connection (ENCODER_USB_STATUS_CONNECTED | ENCODER_USB_STATUS_DISCONNECTED)
+	
+	debugPrint ("'encoderNotifyUsbStatus (dev encoderUsb, char status[])'")
+	debugPrint ("'encoderUsb = [',debugDevToString(encoderUsb),']'")
+	debugPrint ("'status = "',status,'"'")
+	
+	select
+	{
+		active (encoderUsb == dvEncoderUsbFront):
+		{
+			encoder.usbStatusFront = status
+			
+			switch (status)
+			{
+				case ENCODER_USB_STATUS_CONNECTED:
+				{
+					encoderRequestVideoRecordStatus (dvEncoderMain)
+				}
+				
+				case ENCODER_USB_STATUS_DISCONNECTED:
+				{
+					moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_NO_USB, 0)
+				}
+			}
+		}
+		
+		active (encoderUsb == dvEncoderUsbBack):
+		{
+			encoder.usbStatusBack = status
+		}
+	}
+}
+
+#define INCLUDE_ENCODER_NOTIFY_ALARM_CALLBACK
+define_function encoderNotifyAlarm (dev encoderUsb, char alarmMsg[])
+{
+	// encoderUsb is the D:P:S of the USB port on the Encoder.
+	// alarmMsg is the message from the alarm.
+	//		ENCODER_ALARM_STREAM_STOPPED
+	//		ENCODER_ALARM_STREAM_STARTED
+	//		ENCODER_ALARM_STREAM_SUSPENDED
+	//		ENCODER_ALARM_RECORD_STARTED
+	//		ENCODER_ALARM_RECORD_STOPPED
+	//		ENCODER_ALARM_RECORD_SUSPENDED
+	//		ENCODER_ALARM_NO_VIDEO_IN_DETECTED
+	//		ENCODER_ALARM_CONFLICTING_VIDEO_IN_FORMAT
+	//		ENCODER_ALARM_TIMEOUT_STOP_RECORD_STREAM
+	//		ENCODER_ALARM_CANNOT_RECORD_NO_MEDIUM
+	//		ENCODER_ALARM_CANNOT_RECORD_NO_SIGNAL
+	
+	switch (alarmMsg)
+	{
+		case ENCODER_ALARM_RECORD_STOPPED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_STOPPED, 0)
+		}
+	}
+}
+
+
+#define INCLUDE_ENCODER_NOTIFY_VIDEO_RECORDING_STATUS_CALLBACK
+define_function encoderNotifyVideoRecordingStatus (dev encoderMain, char status[])
+{
+	// encoderMain is the D:P:S of the main port on the Encoder.
+	// status is the status of the recording (ENCODER_RECORDING_STATUS_STARTING | ENCODER_RECORDING_STATUS_STARTED | ENCODER_RECORDING_STATUS_STOPPED | ENCODER_RECORDING_STATUS_SUSPENDED)
+	
+	encoder.recordStatus = status
+	
+	switch (status)
+	{
+		case ENCODER_RECORDING_STATUS_STARTING:
+		{
+			
+		}
+		
+		case ENCODER_RECORDING_STATUS_STARTED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_STARTED, 0)
+		}
+		
+		case ENCODER_RECORDING_STATUS_STOPPED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_STOPPED, 0)
+		}
+		
+		case ENCODER_RECORDING_STATUS_SUSPENDED:
+		{
+			if (encoder.usbStatusFront = ENCODER_USB_STATUS_DISCONNECTED)
+				moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_NO_USB, 0)
+			else
+				moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_RECORD_START_STOP, 0, BTNSTATE_RECORDING_STOPPED, 0)
+		}
+	}
+}
+
+
+
+
+#define INCLUDE_ENCODER_NOTIFY_STREAM_STATUS_CALLBACK
+define_function encoderNotifyStreamStatus (dev encoderMain, char status[])
+{
+	// encoderMain is the D:P:S of the main port on the Encoder.
+	// status is the status of the stream (ENCODER_STREAM_STATUS_STARTING | ENCODER_STREAM_STATUS_STARTED | ENCODER_STREAM_STATUS_STOPPED | ENCODER_STREAM_STATUS_SUSPENDED)
+	
+	encoder.streamStatus = status
+	
+	switch (status)
+	{
+		
+		case ENCODER_STREAM_STATUS_STARTING:
+		{
+			
+		}
+		
+		case ENCODER_STREAM_STATUS_STARTED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_STREAM_START_STOP, 0, BTNSTATE_STREAMING_STARTED, 0)
+		}
+		
+		case ENCODER_STREAM_STATUS_STOPPED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_STREAM_START_STOP, 0, BTNSTATE_STREAMING_STOPPED, 0)
+		}
+		
+		case ENCODER_STREAM_STATUS_SUSPENDED:
+		{
+			moderoEnableButtonAnimate (dvTpLecternEncoder, BTN_ADR_ENCODER_STREAM_START_STOP, 0, BTNSTATE_STREAMING_STOPPED, 0)
+		}
+	}
+}
+
 
 
 /*
@@ -395,19 +602,28 @@ define_function dvxNotifySwitch (dev dvxPort1, char signalType[], integer input,
 	// input contains the source input number that was switched to the destination
 	// output contains the destination output number that the source was switched to
 	
+	if ( (encoderFollowingProjector) and (output == dvDvxVidOutProjector.port) )
+	{
+		dvxSwitchVideoOnly (dvDvxMain, input, dvDvxVidOutEncoder.port)
+	}
+	
 	switch (signalType)
 	{
 		case SIGNAL_TYPE_VIDEO:
 		{
+			dvx.switchStatusVideoOutputs[output] = input
+			
 			select
 			{
 				active (output == dvDvxVidOutMonitorStudentTable.port):     selectedVideoInputMonitorStudentTable = input
 				
-				active (output == dvDvxVidOutProjectorAndMultiPip.port):    selectedVideoInputProjector = input
+				active (output == dvDvxVidOutProjector.port):    selectedVideoInputProjector = input
 			}
 		}
 		case SIGNAL_TYPE_AUDIO:
 		{
+			dvx.switchStatusAudioOutputs[output] = input
+			
 			select
 			{
 				active (output == dvDvxAudOutSpeakers.port):    selectedAudioInput = input
@@ -441,13 +657,40 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 		
 		if (signalStatus == DVX_SIGNAL_STATUS_VALID_SIGNAL)
 		{
-			if ( (dvxVideoInput == dvDvxVidInStudentLaptop1) OR
+			/*if ( (dvxVideoInput == dvDvxVidInStudentLaptop1) OR
 			     (dvxVideoInput == dvDvxVidInStudentLaptop2) OR
 			     (dvxVideoInput == dvDvxVidInStudentLaptop3) OR
 			     (dvxVideoInput == dvDvxVidInStudentLaptop4) )
 			{
 				LaptopInputDetectedStudentTable (dvxVideoInput)
+			}*/
+			
+			select
+			{
+				active (dvxVideoInput == dvDvxVidInStudentLaptop1):
+				{
+					LaptopInputDetectedStudentTable (dvTxTable1VidInDigital)
+				}
+				
+				active (dvxVideoInput == dvDvxVidInStudentLaptop2):
+				{
+					LaptopInputDetectedStudentTable (dvTxTable2VidInDigital)
+				}
+				
+				active (dvxVideoInput == dvDvxVidInStudentLaptop3):
+				{
+					LaptopInputDetectedStudentTable (dvTxTable3VidInDigital)
+				}
+				
+				active (dvxVideoInput == dvDvxVidInStudentLaptop4):
+				{
+					LaptopInputDetectedStudentTable (dvTxTable4VidInDigital)
+				}
 			}
+		}
+		else
+		{
+			
 		}
 	}
 	
@@ -474,55 +717,63 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 		{
 			active (signalStatus == DVX_SIGNAL_STATUS_VALID_SIGNAL):
 			{
-				enableDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
-				unblockDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
-				showDraggablePopup (vdvDragAndDropStudentTable, dvxVideoInput.port)
-				
-				select
+				if ( (dvxVideoInput == dvDvxVidInStudentLaptop1) OR
+					 (dvxVideoInput == dvDvxVidInStudentLaptop2) OR
+					 (dvxVideoInput == dvDvxVidInStudentLaptop3) OR
+					 (dvxVideoInput == dvDvxVidInStudentLaptop4) )
 				{
-					active (dvxVideoInput.port == dvDvxVidInStudentLaptop1.port):
+					enableDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
+					unblockDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
+					showDraggablePopup (vdvDragAndDropStudentTable, dvxVideoInput.port)
+					
+					select
 					{
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_1)
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_CLOCKWISE)
+						active (dvxVideoInput.port == dvDvxVidInStudentLaptop1.port):
+						{
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_1)
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_CLOCKWISE)
+						}
+						
+						active (dvxVideoInput.port == dvDvxVidInStudentLaptop2.port):
+						{
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_2)
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_COUNTER_CLOCKWISE)
+						}
+						
+						active (dvxVideoInput.port == dvDvxVidInStudentLaptop3.port):
+						{
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_3)
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_CLOCKWISE)
+						}
+						
+						active (dvxVideoInput.port == dvDvxVidInStudentLaptop4.port):
+						{
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_4)
+							moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_COUNTER_CLOCKWISE)
+						}
 					}
 					
-					active (dvxVideoInput.port == dvDvxVidInStudentLaptop2.port):
-					{
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_2)
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_COUNTER_CLOCKWISE)
-					}
+					moderoDisablePopup (dvTpStudentTableDragAndDrop, POPUP_NAME_MENU)
+					resetMenuOnDragAndDropPanel ()
 					
-					active (dvxVideoInput.port == dvDvxVidInStudentLaptop3.port):
+					channelOn (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS)
+					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE, 0, 30, 2)
+					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, 0, 30, 2)
+					wait 100 'NEW_SIGNAL'
 					{
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_3)
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_CLOCKWISE)
+						channelOff (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS)
+						moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE, 30, 1, 3)
+						moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, 0, 1, 3)
+						moderoEnablePopupOnPage (dvTpStudentTableDragAndDrop, POPUP_NAME_MENU, PAGE_NAME_MAIN)
 					}
-					
-					active (dvxVideoInput.port == dvDvxVidInStudentLaptop4.port):
-					{
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS, MODERO_BUTTON_STATE_ON, IMAGE_FILE_NAME_DRAG_AND_DROP_INSTRUCTIONS_LAPTOP_4)
-						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_COUNTER_CLOCKWISE)
-					}
-				}
-				
-				moderoDisablePopup (dvTpStudentTableDragAndDrop, POPUP_NAME_MENU)
-				resetMenuOnDragAndDropPanel ()
-				
-				channelOn (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS)
-				moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE, 0, 30, 2)
-				moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, 0, 30, 2)
-				wait 100 'NEW_SIGNAL'
-				{
-					channelOff (dvTpStudentTableDragAndDrop, BTN_DRAG_AND_DROP_INSTRUCTIONS)
-					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE, 30, 1, 3)
-					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, 0, 1, 3)
-					moderoEnablePopupOnPage (dvTpStudentTableDragAndDrop, POPUP_NAME_MENU, PAGE_NAME_MAIN)
 				}
 			}
 			
 			active (signalStatus != DVX_SIGNAL_STATUS_VALID_SIGNAL):
 			{
+				disableDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
 				hideDraggablePopup (vdvDragAndDropStudentTable, dvxVideoInput.port)
+				blockDragItem (vdvDragAndDropStudentTable, dvxVideoInput.port)
 			}
 		}
 	}
@@ -543,14 +794,15 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 				cancel_wait 'WAIT_FOR_SIGNAL_OF_INPUT_ROUTED_TO_PROJECTOR_TO_RETURN'
 			}
 		}
+		
 		case DVX_SIGNAL_STATUS_NO_SIGNAL:
 		{
 			if (dvxVideoInput.port == selectedVideoInputMonitorStudentTable)
 			{
 				wait waitTimeValidSignal 'WAIT_FOR_SIGNAL_OF_INPUT_ROUTED_TO_STUDENT_TABLE_TO_RETURN'
 				{
-					snapiDisplayDisablePower (vdvMonitorStudentTable)
-					dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutMonitorStudentTable.port)
+					//snapiDisplayDisablePower (vdvMonitorStudentTable)
+					//dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutMonitorStudentTable.port)
 					off [selectedVideoInputMonitorStudentTable]
 					
 					/*if (audioFollowingVideoOutput == dvDvxVidOutMonitorLeft.port)
@@ -575,8 +827,8 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 			{
 				wait waitTimeValidSignal 'WAIT_FOR_SIGNAL_OF_INPUT_ROUTED_TO_PROJECTOR_TO_RETURN'
 				{
-					snapiDisplayDisablePower (vdvProjector)
-					dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutProjectorAndMultiPip.port)
+					//snapiDisplayDisablePower (vdvProjector)
+					//dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutProjector.port)
 					off [selectedVideoInputProjector]
 					
 					/*if (audioFollowingVideoOutput == dvDvxVidOutMonitorRight.port)
@@ -599,6 +851,36 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 		}
 	}
 }
+
+
+/*
+ * --------------------
+ * Override dxlink-listener callback functions
+ * --------------------
+ */
+
+
+#define INCLUDE_DXLINK_NOTIFY_TX_VIDEO_INPUT_AUTO_SELECT_CALLBACK
+define_function dxlinkNotifyTxVideoInputAutoSelect (dev dxlinkTxPort1, char status[])
+{
+	// dxlinkTxPort1 is the port #1 on the DXLink Tx
+	// status contains the auto video input select status (STATUS_ENABLE | STATUS_DISABLE | DXLINK_AUTO_SELECT_ANALOG_PRIORITY)
+	
+	if (dxlinkTxPort1 == dvDXlinkTxRpmMain)
+	{
+		switch (status)
+		{
+			case STATUS_DISABLE:
+			{
+				dxlinkEnableTxVideoInputAutoSelectPriotityDigital (dvDXlinkTxRpmMain)
+			}
+		}
+	}
+}
+
+
+
+
 
 
 #end_if

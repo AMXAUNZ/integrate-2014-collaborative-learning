@@ -23,4 +23,6 @@ program_name='system-library-control'
 
 #include 'snapi-display-control'
 
+#include 'amx-encoder-control'
+
 #end_if

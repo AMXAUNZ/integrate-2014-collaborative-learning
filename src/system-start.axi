@@ -11,6 +11,7 @@ program_name='system-start'
 #include 'system-structures'
 #include 'system-variables'
 #include 'system-functions'
+#include 'system-rms-api'
 
 /*
  * -------------------------------------------------------------------

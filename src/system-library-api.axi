@@ -21,4 +21,6 @@ program_name='system-library-api'
 
 #include 'amx-modero-api'
 
+#include 'amx-encoder-api'
+
 #end_if

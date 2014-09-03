@@ -20,8 +20,21 @@ dvMaster    = DEV_ID_MASTER:1:SYS_MASTER
 // Student table 10" panel drag and drop
 dvTpStudentTableDragAndDrop = DEV_ID_TOUCH_PANEL_STUDENT_TABLE:PORT_TP_MAIN:SYS_MASTER
 
+// 20" portrait-oriented panel at Lecturers Lectern
+dvTpLecternMain = DEV_ID_TOUCH_PANEL_LECTERN:PORT_TP_MAIN:SYS_MASTER
+dvTpLecternAudio = DEV_ID_TOUCH_PANEL_LECTERN:PORT_TP_AUDIO:SYS_MASTER
+dvTpLecternVideo = DEV_ID_TOUCH_PANEL_LECTERN:PORT_TP_VIDEO:SYS_MASTER
+dvTpLecternLighting = DEV_ID_TOUCH_PANEL_LECTERN:PORT_TP_LIGHTING:SYS_MASTER
+dvTpLecternEncoder = DEV_ID_TOUCH_PANEL_LECTERN:PORT_TP_ENCODER:SYS_MASTER
+
 // Scheduling panel
 dvTpScheduling = DEV_ID_TOUCH_PANEL_SCHEDULING:PORT_TP_MAIN:SYS_MASTER
+dvTpSchedulingRms = DEV_ID_TOUCH_PANEL_SCHEDULING:PORT_TP_RMS:SYS_MASTER
+
+// H.264 Encoder
+dvEncoderMain = DEV_ID_ENCODER:PORT_ENCODER_MAIN:SYS_MASTER
+dvEncoderUsbFront = DEV_ID_ENCODER:PORT_ENCODER_USB_FRONT:SYS_MASTER
+dvEncoderUsbBack = DEV_ID_ENCODER:PORT_ENCODER_USB_BACK:SYS_MASTER
 
 // DXLinx Receiver at Monitor on Student Table
 dvRxMonitorStudentTableMain     = DEV_ID_RX_MONITOR_STUDENT_TABLE:DXLINK_PORT_MAIN:SYS_MASTER
@@ -75,6 +88,7 @@ dvDvxVidIn9     = DEV_ID_DVX_SWITCHER:DVX_PORT_VID_IN_9:SYS_MASTER
 dvDvxVidIn10    = DEV_ID_DVX_SWITCHER:DVX_PORT_VID_IN_10:SYS_MASTER
 // Named video input ports
 dvDvxVidInLecturnLaptopVga  = dvDvxVidIn1
+dvDvxVidInLecturnDocCam     = dvDvxVidIn2
 dvDvxVidInLecturnLaptopHdmi = dvDvxVidIn3
 dvDvxVidInCamera            = dvDvxVidIn4
 dvDvxVidInLecturnEnzo       = dvDvxVidIn5
@@ -90,8 +104,8 @@ dvDvxVidOut2    = DEV_ID_DVX_SWITCHER:DVX_PORT_VID_OUT_2:SYS_MASTER
 dvDvxVidOut3    = DEV_ID_DVX_SWITCHER:DVX_PORT_VID_OUT_3:SYS_MASTER
 dvDvxVidOut4    = DEV_ID_DVX_SWITCHER:DVX_PORT_VID_OUT_4:SYS_MASTER
 // Named video output ports
-dvDvxVidOutProjectorAndMultiPip  = dvDvxVidOut1
-dvDvxVidOutMultiPip              = dvDvxVidOut2
+dvDvxVidOutProjector             = dvDvxVidOut1
+dvDvxVidOutEncoder               = dvDvxVidOut2
 dvDvxVidOutMonitorStudentTable   = dvDvxVidOut3
 dvDvxVidOutMultiPreview          = dvDvxVidOut4
 
@@ -112,6 +126,7 @@ dvDvxAudIn13    = DEV_ID_DVX_SWITCHER:DVX_PORT_AUD_IN_13:SYS_MASTER
 dvDvxAudIn14    = DEV_ID_DVX_SWITCHER:DVX_PORT_AUD_IN_14:SYS_MASTER
 // Named audio input ports
 dvDvxAudInLecturnLaptopVga   = dvDvxAudIn1
+dvDvxAudInLecturnDocCam      = dvDvxAudIn2
 dvDvxAudInLecturnLaptopHdmi  = dvDvxAudIn3
 dvDvxAudInLecturnEnzo        = dvDvxAudIn5
 dvDvxAudInStudentEnzo        = dvDvxAudIn6
@@ -144,12 +159,17 @@ dvEnzoLecturn      = DEV_ID_ENZO_LECTURN:PORT_ENZO_MAIN:SYS_MASTER
 dvEnzoStudentTable = DEV_ID_ENZO_STUDENT_TABLE:PORT_ENZO_MAIN:SYS_MASTER
 
 // RMS
-vdvRms  = DEV_ID_VIRTUAL_RMS:PORT_VIRTUAL_MAIN:SYS_MASTER
+vdvRms     = DEV_ID_VIRTUAL_RMS:PORT_VIRTUAL_MAIN:SYS_MASTER
+vdvRmsGui  = DEV_ID_VIRTUAL_RMS_GUI:PORT_VIRTUAL_MAIN:SYS_MASTER
 
 // Multi-Preview
 vdvMultiPreview = DEV_ID_VIRTUAL_MULTI_PREVIEW:PORT_VIRTUAL_MAIN:SYS_MASTER
 
 // Drag and Drop Virtual
 vdvDragAndDropStudentTable = DEV_ID_VIRTUAL_DRAG_AND_DROP_STUDENT_TABLE:PORT_VIRTUAL_MAIN:SYS_MASTER
+
+
+// DXLink TX on RPM demo
+dvDXlinkTxRpmMain = 5301:1:2
 
 #end_if

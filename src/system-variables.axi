@@ -22,6 +22,13 @@ define_variable
  */
 
 
+// Override the DEV arrays within encoder-listener
+dev dvEncoderMainPorts[] = { dvEncoderMain }
+
+dev dvEncoderUsbPorts[] = { dvEncoderUsbFront, dvEncoderUsbBack }
+
+
+
 // Override the DEV array within dvx-listener
 dev dvDvxMainPorts[] = {dvDvxMain}
 
@@ -77,7 +84,8 @@ dev dvDxlinkTxMainPorts[] =
 	dvTxTable1Main,
 	dvTxTable2Main, 
 	dvTxTable3Main, 
-	dvTxTable4Main
+	dvTxTable4Main,
+	dvDXlinkTxRpmMain
 }
 
 dev dvDxlinkTxDigitalVideoInPorts[] = 
@@ -123,6 +131,121 @@ dev dvDxlinkRxAudOutPorts[] =
 	dvRxMonitorStudentTableAudOut
 }
 
+
+/*
+ * --------------------
+ * RMS DEV Arrays
+ * --------------------
+ */
+
+
+// RMS Touch Panel Array
+VOLATILE DEV dvRMSTP[] =
+{
+   dvTpSchedulingRms
+}
+
+// RMS Touch Panel Array -
+//  Base Device for System Keyboard handling
+VOLATILE DEV dvRMSTP_Base[] =
+{
+   dvTpScheduling
+}
+
+/*
+ * --------------------
+ * Button channel/address codes
+ * - need to declare these as variable instead of constant as they are being
+ *   passed through to a module
+ * --------------------
+ */
+
+integer btnsVideoSnapshotPreviews[DVX_MAX_VIDEO_INPUTS] = 
+{
+	11,
+	12,
+	13,
+	14,
+	15,
+	16,
+	17,
+	18,
+	19,
+	20
+}
+
+integer btnAdrsVideoSnapshotPreviews[DVX_MAX_VIDEO_INPUTS] = 
+{
+	11,
+	12,
+	13,
+	14,
+	15,
+	16,
+	17,
+	18,
+	19,
+	20
+}
+
+integer btnAdrsVideoInputLabels[DVX_MAX_VIDEO_INPUTS] = 
+{
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50
+}
+
+integer btnAdrsVideoOutputSnapshotPreviews[DVX_MAX_VIDEO_OUTPUTS] = 
+{
+	9991,
+	9992,
+	9993,
+	9994
+}
+
+integer btnAdrsVideoOutputLabels[DVX_MAX_VIDEO_OUTPUTS] = 
+{
+	9991,
+	9992,
+	9993,
+	9994
+}
+
+integer btnAdrVideoPreviewLoadingMessage = 30
+
+integer btnLoadingBarMultiState = 32
+
+integer btnAdrLoadingBar = 32
+
+integer btnAdrVideoPreviewWindow = 31
+
+integer btnExitVideoPreview = 100
+
+char popupNameVideoPreview[] = 'popup-video-preview'
+
+char imageFileNameNoVideo[] = ''//'icon-novideo.png'
+
+
+integer btnVideoOutputDestinationSelections[DVX_MAX_VIDEO_OUTPUTS]
+
+integer selectedInputStudentPodB
+integer selectedInputStudentPodC
+
+/*
+ * --------------------
+ * Device Driver Files
+ * --------------------
+ */
+
+CHAR xddEpsonProjector[] = 'Epson_Video_Projector_EB-1430Wi_1430WT_1.0.0.xdd'
+
 /*
  * --------------------
  * Variables to keep track of changes in the system
@@ -131,12 +254,12 @@ dev dvDxlinkRxAudOutPorts[] =
 
 _DvxSwitcher dvx
 
+_Encoder encoder
+
 persistent integer selectedAudioInput = DVX_PORT_AUD_IN_NONE
 
 persistent integer selectedVideoInputMonitorStudentTable  = DVX_PORT_VID_IN_NONE
 persistent integer selectedVideoInputProjector = DVX_PORT_VID_IN_NONE
-
-char imageFileNameNoVideo[] = 'icon-novideo.png'
 
 // Drag and drop areas for 10" panel
 // drop areas
@@ -148,6 +271,16 @@ _area dragAreas10[DVX_MAX_VIDEO_INPUTS]
 char draggablePopups10[DVX_MAX_VIDEO_INPUTS][40]
 char blockDraggablePopups10[DVX_MAX_VIDEO_INPUTS][40]
 
+integer selectedVideoInputLecternPanel = DVX_PORT_VID_IN_NONE
+
+integer lightsMode = LIGHTS_MODE_MID
+
+integer streamingStatus
+
+integer encoderFollowingProjector
+
+integer flash
+
 /*
  * --------------------
  * Wait times
@@ -155,6 +288,7 @@ char blockDraggablePopups10[DVX_MAX_VIDEO_INPUTS][40]
  * --------------------
  */
 
-integer waitTimeValidSignal     = 600
+integer waitTimeValidSignal     = 20
+integer waitTimeToShowSignageOnProjector = 20
 
 #end_if
