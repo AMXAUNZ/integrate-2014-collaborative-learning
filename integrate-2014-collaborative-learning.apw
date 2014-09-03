@@ -136,6 +136,25 @@
 <UserName></UserName>
 <Password></Password>
 <Comments></Comments>
+<File CompileType="Netlinx" Type="Other"><Identifier>NMX-ENC.InstructionManual</Identifier>
+<FilePathName>doc\NMX-ENC.InstructionManual.pdf</FilePathName>
+<Comments></Comments>
+<MasterDirectory>\</MasterDirectory>
+</File>
+<File CompileType="Netlinx" Type="Other"><Identifier>RMSEnterprise.NetLinxProgrammersGuide</Identifier>
+<FilePathName>doc\RMSEnterprise.NetLinxProgrammersGuide.pdf</FilePathName>
+<Comments></Comments>
+<MasterDirectory>\</MasterDirectory>
+</File>
+<File CompileType="Netlinx" Type="Other"><Identifier>Epson_Video_Projector_EB-1430Wi_1430WT_1.0.0</Identifier>
+<FilePathName>drv\Epson_Video_Projector_EB-1430Wi_1430WT_1.0.0.pdf</FilePathName>
+<Comments></Comments>
+<MasterDirectory>\</MasterDirectory>
+</File>
+<File CompileType="Netlinx" Type="XDD"><Identifier>Epson_Video_Projector_EB-1430Wi_1430WT_1.0.0</Identifier>
+<FilePathName>drv\Epson_Video_Projector_EB-1430Wi_1430WT_1.0.0.xdd</FilePathName>
+<Comments></Comments>
+</File>
 <File CompileType="Netlinx" Type="Include"><Identifier>amx-controlports-api</Identifier>
 <FilePathName>lib\amx-device-library\amx-controlports-api.axi</FilePathName>
 <Comments></Comments>
@@ -176,6 +195,18 @@
 <FilePathName>lib\amx-dxlink-library\amx-dxlink-listener.axi</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="Include"><Identifier>amx-encoder-api</Identifier>
+<FilePathName>lib\amx-encoder-library\amx-encoder-api.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>amx-encoder-control</Identifier>
+<FilePathName>lib\amx-encoder-library\amx-encoder-control.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>amx-encoder-listener</Identifier>
+<FilePathName>lib\amx-encoder-library\amx-encoder-listener.axi</FilePathName>
+<Comments></Comments>
+</File>
 <File CompileType="Netlinx" Type="Include"><Identifier>amx-enzo-api</Identifier>
 <FilePathName>lib\amx-enzo-library\amx-enzo-api.axi</FilePathName>
 <Comments></Comments>
@@ -202,6 +233,46 @@
 </File>
 <File CompileType="Netlinx" Type="Include"><Identifier>common</Identifier>
 <FilePathName>lib\common-library\common.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsApi</Identifier>
+<FilePathName>lib\rms-sdk\RmsApi.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="DUET"><Identifier>RmsClientGui_dr4_0_0</Identifier>
+<FilePathName>lib\rms-sdk\RmsClientGui_dr4_0_0.jar</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>RmsControlSystemMonitor</Identifier>
+<FilePathName>lib\rms-sdk\RmsControlSystemMonitor.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsEventListener</Identifier>
+<FilePathName>lib\rms-sdk\RmsEventListener.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsGuiApi</Identifier>
+<FilePathName>lib\rms-sdk\RmsGuiApi.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsMathUtil</Identifier>
+<FilePathName>lib\rms-sdk\RmsMathUtil.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="DUET"><Identifier>RmsNetLinxAdapter_dr4_0_0</Identifier>
+<FilePathName>lib\rms-sdk\RmsNetLinxAdapter_dr4_0_0.jar</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsSchedulingApi</Identifier>
+<FilePathName>lib\rms-sdk\RmsSchedulingApi.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>RmsSchedulingEventListener</Identifier>
+<FilePathName>lib\rms-sdk\RmsSchedulingEventListener.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>RmsTouchPanelMonitor</Identifier>
+<FilePathName>lib\rms-sdk\RmsTouchPanelMonitor.axs</FilePathName>
 <Comments></Comments>
 </File>
 <File CompileType="Netlinx" Type="Module"><Identifier>drag-and-drop</Identifier>
@@ -272,6 +343,14 @@
 <FilePathName>src\system-mutual-exclusions.axi</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="Include"><Identifier>system-rms-api</Identifier>
+<FilePathName>src\system-rms-api.axi</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Include"><Identifier>system-rms-listener</Identifier>
+<FilePathName>src\system-rms-listener.axi</FilePathName>
+<Comments></Comments>
+</File>
 <File CompileType="Netlinx" Type="Include"><Identifier>system-start</Identifier>
 <FilePathName>src\system-start.axi</FilePathName>
 <Comments></Comments>
@@ -284,13 +363,23 @@
 <FilePathName>src\system-variables.axi</FilePathName>
 <Comments></Comments>
 </File>
+<File CompileType="Netlinx" Type="TP4"><Identifier>1024x600_MXD-700-L_RMS</Identifier>
+<FilePathName>ui\1024x600_MXD-700-L_RMS.TP4</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="Custom [10003:1:1]"><DevName>Custom [10003:1:1]</DevName>
+</DeviceMap>
+</File>
 <File CompileType="Netlinx" Type="TP4"><Identifier>integrate-2014-mxd-1000-p-student-table</Identifier>
 <FilePathName>ui\integrate-2014-mxd-1000-p-student-table.TP4</FilePathName>
 <Comments></Comments>
+<DeviceMap DevAddr="Custom [10002:1:0]"><DevName>Custom [10002:1:0]</DevName>
+</DeviceMap>
 </File>
 <File CompileType="Netlinx" Type="TP4"><Identifier>integrate-2014-mxd-2000xl-pan-p-lecturn</Identifier>
 <FilePathName>ui\integrate-2014-mxd-2000xl-pan-p-lecturn.TP4</FilePathName>
 <Comments></Comments>
+<DeviceMap DevAddr="Custom [10001:1:0]"><DevName>Custom [10001:1:0]</DevName>
+</DeviceMap>
 </File>
 </System>
 </Project>
