@@ -258,9 +258,6 @@ data_event [vdvDragAndDropStudentTable]
 							sendCommand (vdvDragAndDropStudentTable, "'DEFINE_DROP_AREA-',buildDragAndDropParameterString(dvDvxVidOutMonitorStudentTable.port, dropAreaLeftOrientationMonitorStudentTable)")
 						}
 						
-						/*moderoSetButtonText (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_10_INCH_PANEL_DESTINATION_A, MODERO_BUTTON_STATE_ALL, 'Left')
-						moderoSetButtonText (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_10_INCH_PANEL_DESTINATION_B, MODERO_BUTTON_STATE_ALL, 'Right')*/
-						
 						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_CLOCKWISE)
 					}
 					
@@ -276,9 +273,6 @@ data_event [vdvDragAndDropStudentTable]
 						{
 							sendCommand (vdvDragAndDropStudentTable, "'DEFINE_DROP_AREA-',buildDragAndDropParameterString(dvDvxVidOutMonitorStudentTable.port, dropAreaRightOrientationMonitorStudentTable)")
 						}
-						
-						/*moderoSetButtonText (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_10_INCH_PANEL_DESTINATION_A, MODERO_BUTTON_STATE_ALL, 'Right')
-						moderoSetButtonText (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_10_INCH_PANEL_DESTINATION_B, MODERO_BUTTON_STATE_ALL, 'Left')*/
 						
 						moderoSetButtonBitmap (dvTpStudentTableDragAndDrop, BTN_DROP_AREA_MONITOR_STUDENT_TABLE_DROP_ICON, MODERO_BUTTON_STATE_ALL, IMAGE_FILE_NAME_DROP_ICON_ROTATE_90_DEGREES_COUNTER_CLOCKWISE)
 					}
@@ -357,7 +351,6 @@ data_event [vdvDragAndDropStudentTable]
 					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, btnDropArea, 30, 60, 1)
 				}
 				
-				//channelOn (dvTpStudentTableDragAndDrop, btnDropArea)
 			}
 			
 			case 'DRAG_ITEM_EXIT_DROP_AREA-':
@@ -385,7 +378,6 @@ data_event [vdvDragAndDropStudentTable]
 					moderoEnableButtonAnimate (dvTpStudentTableDragAndDrop, btnDropArea, 60, 30, 2)
 				}
 				
-				//channelOff (dvTpStudentTableDragAndDrop, btnDropArea)
 			}
 			
 			case 'DRAG_ITEM_DROPPED_ON_DROP_AREA-':
@@ -398,11 +390,9 @@ data_event [vdvDragAndDropStudentTable]
 				idDropArea = atoi(data.text)
 				
 				// Define drag items again
-				//enableDragItemsAll (vdvDragAndDropStudentTable)
 				enableDragItemsAllWithValidSignal (vdvDragAndDropStudentTable)
 				
 				// unblock all of the drag items
-				//unblockDragItemsAll (vdvDragAndDropStudentTable)
 				unblockDragItemsAllWithValidSignal (vdvDragAndDropStudentTable)
 				
 				// delete the drop areas for the monitors
@@ -465,7 +455,6 @@ data_event [dvTpStudentTableDragAndDrop]
 				if (find_string(data.text, "'PAGE-',PAGE_NAME_MAIN", 1) == 1)
 				{
 					// Define drag items again
-					//enableDragItemsAll (vdvDragAndDropStudentTable)
 					enableDragItemsAllWithValidSignal (vdvDragAndDropStudentTable)
 					
 					// delete the drop areas for the monitors
@@ -475,7 +464,6 @@ data_event [dvTpStudentTableDragAndDrop]
 					resetAllDraggablePopups (vdvDragAndDropStudentTable)
 					
 					// unblock all of the drag items
-					//unblockDragItemsAll (vdvDragAndDropStudentTable)
 					unblockDragItemsAllWithValidSignal (vdvDragAndDropStudentTable)
 					
 					moderoEnablePopupOnPage (dvTpStudentTableDragAndDrop, POPUP_NAME_MENU, PAGE_NAME_MAIN)
@@ -519,8 +507,6 @@ button_event [dvTpLecternVideo,btnsVideoSnapshotPreviews]
 			}
 			
 			// copy the image from the selected source snapshot button
-			// BTN_ADR_SELECTED_SOURCE_PREVIEW
-			
 			moderoButtonCopyAttribute (dvTpLecternVideo,
 									   dvTpLecternVideo.port,
 									   btnAdrsVideoSnapshotPreviews[selectedVideoInputLecternPanel],

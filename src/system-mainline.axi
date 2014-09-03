@@ -79,7 +79,6 @@ wait 5
 wait 100
 {
 	dxlinkRequestTxVideoInputAutoSelect (dvDXlinkTxRpmMain)
-	//dxlinkEnableTxVideoInputAutoSelectPriotityDigital (dvDXlinkTxRpmMain)
 }
 
 

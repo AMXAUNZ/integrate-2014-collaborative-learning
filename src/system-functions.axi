@@ -657,14 +657,6 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 		
 		if (signalStatus == DVX_SIGNAL_STATUS_VALID_SIGNAL)
 		{
-			/*if ( (dvxVideoInput == dvDvxVidInStudentLaptop1) OR
-			     (dvxVideoInput == dvDvxVidInStudentLaptop2) OR
-			     (dvxVideoInput == dvDvxVidInStudentLaptop3) OR
-			     (dvxVideoInput == dvDvxVidInStudentLaptop4) )
-			{
-				LaptopInputDetectedStudentTable (dvxVideoInput)
-			}*/
-			
 			select
 			{
 				active (dvxVideoInput == dvDvxVidInStudentLaptop1):
@@ -693,15 +685,6 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 			
 		}
 	}
-	
-	/*if (dvxVideoInput.port == selectedVideoInputMonitorLeft)
-	{
-		signalStatusDvxInputMonitorLeft = signalStatus
-	}
-	if (dvxVideoInput.port == selectedVideoInputMonitorRight)
-	{
-		signalStatusDvxInputMonitorRight = signalStatus
-	}*/
 	
 	// 10" Drag and drop
 	// if input is one of the table inputs and the signal has just been lost (changed from valid signal)
@@ -801,25 +784,7 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 			{
 				wait waitTimeValidSignal 'WAIT_FOR_SIGNAL_OF_INPUT_ROUTED_TO_STUDENT_TABLE_TO_RETURN'
 				{
-					//snapiDisplayDisablePower (vdvMonitorStudentTable)
-					//dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutMonitorStudentTable.port)
 					off [selectedVideoInputMonitorStudentTable]
-					
-					/*if (audioFollowingVideoOutput == dvDvxVidOutMonitorLeft.port)
-					{
-						if (signalStatusDvxInputMonitorRight == DVX_SIGNAL_STATUS_VALID_SIGNAL)
-						{
-							dvxSwitchAudioOnly (dvDvxMain, selectedVideoInputMonitorRight, dvDvxAudOutSpeakers.port)
-							audioFollowingVideoOutput = dvDvxVidOutMonitorRight.port
-						}
-						else
-						{
-							dvxSwitchAudioOnly (dvDvxMain, DVX_PORT_AUD_IN_NONE, dvDvxAudOutSpeakers.port)
-							dvxSetAudioOutputVolume (dvDvxAudOutSpeakers, volumeDefault)
-							off [selectedAudioInput]
-							off [audioFollowingVideoOutput]
-						}
-					}*/
 				}
 			}
 			
@@ -827,25 +792,7 @@ define_function dvxNotifyVideoInputStatus (dev dvxVideoInput, char signalStatus[
 			{
 				wait waitTimeValidSignal 'WAIT_FOR_SIGNAL_OF_INPUT_ROUTED_TO_PROJECTOR_TO_RETURN'
 				{
-					//snapiDisplayDisablePower (vdvProjector)
-					//dvxSwitchVideoOnly (dvDvxMain, DVX_PORT_VID_IN_NONE, dvDvxVidOutProjector.port)
 					off [selectedVideoInputProjector]
-					
-					/*if (audioFollowingVideoOutput == dvDvxVidOutMonitorRight.port)
-					{
-						if (signalStatusDvxInputMonitorLeft == DVX_SIGNAL_STATUS_VALID_SIGNAL)
-						{
-							dvxSwitchAudioOnly (dvDvxMain, selectedVideoInputMonitorLeft, dvDvxAudOutSpeakers.port)
-							audioFollowingVideoOutput = dvDvxVidOutMonitorLeft.port
-						}
-						else
-						{
-							dvxSwitchAudioOnly (dvDvxMain, DVX_PORT_AUD_IN_NONE, dvDvxAudOutSpeakers.port)
-							dvxSetAudioOutputVolume (dvDvxAudOutSpeakers, volumeDefault)
-							off [selectedAudioInput]
-							off [audioFollowingVideoOutput]
-						}
-					}*/
 				}
 			}
 		}

@@ -41,7 +41,6 @@ long timelineTimeMplBetweenSwitches = 1000
 
 integer waitTimeVideoPreview = 5
 integer waitTimeVideoLoading = 20
-//integer waitTimeValidSignal  = 600
 integer waitTimeMplSnapShot  = 10
 integer waitTimeSwitchToNextInputAfterSnapshot = 20
 integer waitTimeUntilNextSwitch = 20
@@ -50,7 +49,6 @@ volatile integer inputForVideoPreview = DVX_PORT_VID_IN_NONE
 volatile integer inputForSingleInputSnapshots = DVX_PORT_VID_IN_NONE
 
 
-//volatile integer isVideoBeingPreviewed = 0
 volatile integer mode = MODE_SNAPSHOTS
 
 volatile _DvxSwitcher dvx
@@ -181,10 +179,7 @@ define_function takeSnapshotSingle ()
 			moderoDisableResourceReloadOnView (dvTpSnapshotPreview, dynamicImageName)
 			
 			// only need to set the button bitmap the first time the resource is loaded
-			//if (currentPreviewButtonBitmap[input] != dynamicImageName)
-			//{
-				moderoSetButtonBitmapResource (dvTpSnapshotPreview, btnAdrsVideoInputSnapshotPreviews[input],MODERO_BUTTON_STATE_ALL,dynamicImageName)
-			//}
+			moderoSetButtonBitmapResource (dvTpSnapshotPreview, btnAdrsVideoInputSnapshotPreviews[input],MODERO_BUTTON_STATE_ALL,dynamicImageName)
 			
 			for (output = 1; output <= DVX_MAX_VIDEO_OUTPUTS; output++)
 			{
@@ -231,10 +226,7 @@ define_function takeSnapshot ()
 			moderoDisableResourceReloadOnView (dvTpSnapshotPreview, dynamicImageName)
 			
 			// only need to set the button bitmap the first time the resource is loaded
-			//if (currentPreviewButtonBitmap[input] != dynamicImageName)
-			//{
-				moderoSetButtonBitmapResource (dvTpSnapshotPreview, btnAdrsVideoInputSnapshotPreviews[input],MODERO_BUTTON_STATE_ALL,dynamicImageName)
-			//}
+			moderoSetButtonBitmapResource (dvTpSnapshotPreview, btnAdrsVideoInputSnapshotPreviews[input],MODERO_BUTTON_STATE_ALL,dynamicImageName)
 			
 			for (output = 1; output <= DVX_MAX_VIDEO_OUTPUTS; output++)
 			{
@@ -272,41 +264,28 @@ define_function takeSnapshot ()
 
 define_function startMultiPreviewSnapshots ()
 {
-	//if (getFlag(mode) != MODE_SNAPSHOTS)
-	//{
-		//setFlag (mode, MODE_SNAPSHOTS)
-		dvxRequestVideoInputStatusAll (dvDvxSwitcher)
-		dvxRequestVideoInputNameAll (dvDvxSwitcher)
-		dvxRequestInputVideo (dvDvxSwitcher, dvDvxVidOutMultiPreview.port)	// pretty sure the dvxNotifySwitch command gets called
-	//}
+	dvxRequestVideoInputStatusAll (dvDvxSwitcher)
+	dvxRequestVideoInputNameAll (dvDvxSwitcher)
+	dvxRequestInputVideo (dvDvxSwitcher, dvDvxVidOutMultiPreview.port)	// pretty sure the dvxNotifySwitch command gets called
 }
 
 define_function startSinglePreviewSnapshots ()
 {
-	//if (getFlag(mode) != MODE_SNAPSHOTS_INPUT_X)
-	//{
-		//setFlag (mode, MODE_SNAPSHOTS_INPUT_X)
-		//dvxRequestVideoInputStatusAll (dvDvxSwitcher)
-		//dvxRequestVideoInputNameAll (dvDvxSwitcher)
-		//dvxRequestInputVideo (dvDvxSwitcher, dvDvxVidOutMultiPreview.port)	// pretty sure the dvxNotifySwitch command gets called
-		
+	cancel_wait 'WAITING_TO_TAKE_SNAPSHOT'
+	cancel_wait 'WAITING_TO_SWITCH_TO_NEXT_INPUT'
+	cancel_wait 'WAITING_FOR_ANY_VALID_SIGNALS'
 	
-		cancel_wait 'WAITING_TO_TAKE_SNAPSHOT'
-		cancel_wait 'WAITING_TO_SWITCH_TO_NEXT_INPUT'
-		cancel_wait 'WAITING_FOR_ANY_VALID_SIGNALS'
-		
-		dvxRequestVideoInputStatus (dvDvxVidInPorts[inputForSingleInputSnapshots])
-		dvxRequestVideoInputName (dvDvxVidInPorts[inputForSingleInputSnapshots])
-		
-		if (dvx.switchStatusVideoOutputs[dvDvxVidOutMultiPreview.port] != inputForSingleInputSnapshots)
-		{
-			dvxSwitchVideoOnly (dvDvxSwitcher, inputForSingleInputSnapshots, dvDvxVidOutMultiPreview.port)
-		}
-		else
-		{
-			dvxRequestInputVideo (dvDvxSwitcher, dvDvxVidOutMultiPreview.port)	// pretty sure the dvxNotifySwitch command gets called
-		}
-	//}
+	dvxRequestVideoInputStatus (dvDvxVidInPorts[inputForSingleInputSnapshots])
+	dvxRequestVideoInputName (dvDvxVidInPorts[inputForSingleInputSnapshots])
+	
+	if (dvx.switchStatusVideoOutputs[dvDvxVidOutMultiPreview.port] != inputForSingleInputSnapshots)
+	{
+		dvxSwitchVideoOnly (dvDvxSwitcher, inputForSingleInputSnapshots, dvDvxVidOutMultiPreview.port)
+	}
+	else
+	{
+		dvxRequestInputVideo (dvDvxSwitcher, dvDvxVidOutMultiPreview.port)	// pretty sure the dvxNotifySwitch command gets called
+	}
 }
 
 
@@ -315,14 +294,10 @@ define_function stopLiveVideoPreview ()
 	cancel_wait 'WAIT_HIDE_VIDEO_LOADING_BUTTON'
 	moderoSetButtonHide (dvTpSnapshotPreview, btnAdrVideoPreviewLoadingMessage)
 	moderoSetButtonHide (dvTpSnapshotPreview, btnAdrLoadingBar)
-	//startMultiPreviewSnapshots ()
 }
 
 define_function startLiveVideoPreview (integer input)
 {
-	// turn on the video being previed flag
-	//setFlag (mode, MODE_VIDEO_PREVIEW)
-	
 	cancel_wait 'WAITING_TO_TAKE_SNAPSHOT'
 	cancel_wait 'WAITING_TO_SWITCH_TO_NEXT_INPUT'
 	cancel_wait 'WAITING_FOR_ANY_VALID_SIGNALS'
@@ -346,7 +321,6 @@ define_function startLiveVideoPreview (integer input)
 		moderoSetButtonHide (dvTpSnapshotPreview, btnAdrVideoPreviewLoadingMessage)
 		moderoSetButtonHide (dvTpSnapshotPreview, btnAdrLoadingBar)
 		moderoSetButtonOpacity (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL, MODERO_OPACITY_OPAQUE)
-		//moderoSetButtonShow (dvTpSnapshotPreview, btnAdrVideoPreviewWindow)
 	}
 	
 }
@@ -368,7 +342,7 @@ define_function changeMode (integer newMode)
 			// delete video snapshot on the video preview button
 			moderoDeleteButtonVideoSnapshot (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL)
 			moderoSetButtonOpacity (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL, MODERO_OPACITY_INVISIBLE)
-			//moderoSetButtonHide (dvTpSnapshotPreview, btnAdrVideoPreviewWindow)
+			
 			stopLiveVideoPreview ()
 			startMultiPreviewSnapshots ()
 		}
@@ -380,7 +354,7 @@ define_function changeMode (integer newMode)
 			// delete video snapshot on the video preview button
 			moderoDeleteButtonVideoSnapshot (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL)
 			moderoSetButtonOpacity (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL, MODERO_OPACITY_INVISIBLE)
-			//moderoSetButtonHide (dvTpSnapshotPreview, btnAdrVideoPreviewWindow)
+			
 			stopLiveVideoPreview ()
 			startSinglePreviewSnapshots ()
 		}
@@ -405,7 +379,6 @@ define_function dvxNotifySwitch (dev dvxPort1, char signalType[], integer input,
 	
 	if (signalType == SIGNAL_TYPE_VIDEO)
 	{
-		//dvx.switchStatusVideoOutputs[dvDvxVidOutMultiPreview.port] = input	// replaced with next line
 		dvx.switchStatusVideoOutputs[output] = input
 		
 		
@@ -688,15 +661,8 @@ data_event[virtual]
 		{
 			switch (data.text)
 			{
-				//case 'STOP_VIDEO_PREVIEW':
 				case 'SNAPSHOTS':
 				{
-					// delete video snapshot on the video preview button
-					/*moderoDeleteButtonVideoSnapshot (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL)
-					moderoSetButtonOpacity (dvTpSnapshotPreview, btnAdrVideoPreviewWindow, MODERO_BUTTON_STATE_ALL, MODERO_OPACITY_INVISIBLE)
-					//moderoSetButtonHide (dvTpSnapshotPreview, btnAdrVideoPreviewWindow)
-					stopLiveVideoPreview ()*/
-					
 					changeMode (MODE_SNAPSHOTS)
 				}
 			}
@@ -705,15 +671,9 @@ data_event[virtual]
 		{
 			switch (header)
 			{
-				//case 'START_VIDEO_PREVIEW-':
 				case 'VIDEO_PREVIEW-':
 				{
 					// <input>
-					/*integer input
-					input = atoi(data.text)
-					
-					startLiveVideoPreview (input)*/
-					
 					inputForVideoPreview = atoi(data.text)
 					changeMode (MODE_VIDEO_PREVIEW)
 				}

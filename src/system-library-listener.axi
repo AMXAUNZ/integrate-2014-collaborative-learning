@@ -15,8 +15,6 @@ program_name='system-library-listener'
 
 #include 'amx-dxlink-listener'
 
-//#include 'amx-enzo-listener'
-
 #include 'amx-modero-listener'
 
 #include 'amx-encoder-listener'
